@@ -1,0 +1,9 @@
+.header {
+  margin-bottom: 2rem;
+
+  &__wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+}

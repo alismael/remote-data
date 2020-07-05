@@ -1,0 +1,28 @@
+.nav {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+
+  &__item {
+    float: left;
+  }
+
+  &__link {
+    display: block;
+    color: #5f6368;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: none;
+      color: #3863d9;
+    }
+
+    &.active {
+      color: #3863d9;
+      font-weight: bold;
+      border-bottom: 2px solid #3863d9;
+    }
+  }
+}
