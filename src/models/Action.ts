@@ -1,26 +1,26 @@
 import { RemoteKind } from './RemoteData';
 
-type ActionName = string;
+export type ActionType = string;
 
 type NotAskedAction = {
-  type: ActionName;
+  type: ActionType;
   kind: RemoteKind.NotAsked;
 };
 
 type LoadingAction = {
-  type: ActionName;
+  type: ActionType;
   kind: RemoteKind.Loading;
 };
 
 type SuccessAction<T> = {
-  type: ActionName;
+  type: ActionType;
   kind: RemoteKind.Success;
   data: T;
   headers: any;
 };
 
 type RejectAction<E> = {
-  type: ActionName;
+  type: ActionType;
   kind: RemoteKind.Reject;
   error: E;
   headers: any;
