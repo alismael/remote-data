@@ -16,21 +16,21 @@ const RemoteComponent = <T, E>({
 }: RemoteComponentProps<T, E>) => {
   switch (remote.kind) {
     case RemoteKind.NotAsked:
-      return <div></div>;
+      return <React.Fragment></React.Fragment>;
 
     case RemoteKind.Loading:
       if (loading) return loading();
-      return <div></div>;
+      return <React.Fragment></React.Fragment>;
 
     case RemoteKind.Reject:
       if (reject) return reject({ err: remote.error });
-      return <div></div>;
+      return <React.Fragment></React.Fragment>;
 
     case RemoteKind.Success:
       return success({ data: remote.data });
 
     default:
-      return <div></div>;
+      return <React.Fragment></React.Fragment>;
   }
 };
 
