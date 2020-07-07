@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { ThunkDispatch } from 'redux-thunk';
 import { StoreState, Post } from '../../models';
 import { RemoteData, RemoteComponent } from 'remote-data';
-import { fetchPosts as fetchPostsAction } from '../../redux/actions/posts';
+import { fetchPosts as fetchPostsAction } from '../../redux/posts/actions';
 import { PostsError, PostsLoading, ListPosts } from '../../components';
 
 type PostsContainerProps = {

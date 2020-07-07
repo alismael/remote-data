@@ -1,6 +1,6 @@
-import { FETCH_POSTS } from '../actions/posts';
 import { RemoteData, RemoteKind, Action } from 'remote-data';
 import { Post } from '../../models';
+import { FETCH_POSTS } from './constants';
 
 export type PostsStore = {
   posts: RemoteData<Post[], string>;

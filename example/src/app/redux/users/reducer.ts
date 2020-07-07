@@ -1,4 +1,4 @@
-import { FETCH_USERS } from '../actions/users';
+import { FETCH_USERS } from './constants';
 import { RemoteData, RemoteKind, Action } from 'remote-data';
 import { User } from '../../models';
 
