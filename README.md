@@ -159,16 +159,10 @@ Install dependencies:
 npm install
 ```
 
-Run examples at [http://localhost:3000/](http://localhost:3000/) with webpack dev server:
+Run examples at [http://localhost:3000/](http://localhost:3000/):
 
 ```sh
 npm start
-```
-
-Run tests & coverage report:
-
-```sh
-npm test
 ```
 
 Build:
