@@ -8,7 +8,7 @@ import { fetchPosts as fetchPostsAction } from '../../redux/actions/posts';
 import { PostsError, PostsLoading, ListPosts } from '../../components';
 
 type PostsContainerProps = {
-  fetchPosts: () => Promise<void>;
+  fetchPosts: () => Promise<Post[]>;
   posts: RemoteData<Post[], string>;
 };
 
