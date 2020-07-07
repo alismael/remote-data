@@ -3,7 +3,7 @@ import * as ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import store from './redux/store';
 import AppRoutes from './routes';
-// import './styles/index.scss';
+import './styles/index.scss';
 
 const rootEl = document.getElementById('root');
 
