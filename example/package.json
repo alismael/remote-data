@@ -19,7 +19,7 @@
     "@types/react-dom": "file:../node_modules/@types/react-dom",
     "@types/react-redux": "^7.1.9",
     "@types/react-router-dom": "^5.1.5",
-    "node-sass": "^4.14.1",
+    "bootstrap": "^4.5.0",
     "react": "file:../node_modules/react",
     "react-dom": "file:../node_modules/react-dom",
     "react-redux": "^7.2.0",
