@@ -14,7 +14,7 @@ type UsersContainerProps = {
 const UsersContainer = ({ fetchUsers, users }: UsersContainerProps) => {
   React.useEffect(() => {
     fetchUsers();
-  }, []);
+  }, [fetchUsers]);
 
   return (
     <>

@@ -15,7 +15,7 @@ type PostsContainerProps = {
 const PostsContainer = ({ fetchPosts, posts }: PostsContainerProps) => {
   React.useEffect(() => {
     fetchPosts();
-  }, []);
+  }, [fetchPosts]);
 
   return (
     <>
