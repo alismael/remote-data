@@ -1,6 +1,6 @@
 # remote-data
 
-> Handling asynchronous fetching of data with React/Redux
+> Handling fetching asynchronous data with React/Redux
 
 ## Dependencies
 
@@ -11,6 +11,8 @@ These libraries are not bundled with RemoteData and required at runtime:
 * [**react**](https://www.npmjs.com/package/react)
 
 #### Usage
+
+Performing a `GET` request to fetch the data
 
 actions.ts
 
@@ -28,12 +30,122 @@ const fetchPosts = () =>
   });
 ```
 
-Available options:
+Adding reducer to update the store
 
-* Beside the request options url, method, baseURL, headers, params and so on you have three optional params as follow:
-* `action` - `optional` The action that will be dispatched to track the request status (loading, success, and error)
-* `onSuccess` - `optional` A callback when request is done successfully
-* `onError` - `optional` A callback if an error occurred
+reducer.ts
+
+```ts
+import { Reducer } from 'react';
+import { combineReducers } from 'redux';
+import { fetchingReducer, RemoteData } from 'remote-data';
+import { Post } from '../../models';
+import { FETCH_POSTS } from './constants';
+
+export type PostsStore = {
+  posts: RemoteData<Post[], string>;
+};
+
+const postsReducer: Reducer<PostsStore, any> = combineReducers({
+  posts: fetchingReducer<Post[], string>(FETCH_POSTS),
+});
+
+export default postsReducer;
+```
+
+Handling your view with `RemoteComponent` component
+
+PostsComponent.tsx
+
+```tsx
+const PostsLoading = () => <>Loading posts...</>;
+const PostsError = ({ err }: { err: string }) => <>{err}</>;
+const ListPosts = ({ data }: { data: Post[] }) => <>Here you can use the fetched data</>
+
+type PostsContainerProps = {
+  fetchPosts: () => Promise<Post[]>;
+  posts: RemoteData<Post[], string>;
+};
+
+const PostsContainer = ({ fetchPosts, posts }: PostsContainerProps) => {
+  React.useEffect(() => {
+    fetchPosts();
+  }, [fetchPosts]);
+
+  return (
+    <RemoteComponent
+      remote={posts}
+      loading={PostsLoading}
+      reject={PostsError}
+      success={ListPosts}
+    />
+  );
+};
+
+const mapStateToProps = ({ posts }: StoreState) => ({
+  posts: posts.posts,
+});
+const mapDispatchToProps = (
+  dispatch,
+) => ({
+  fetchPosts: () => dispatch(fetchPostsAction()),
+});
+connect(mapStateToProps, mapDispatchToProps)(PostsContainer);
+```
+
+## api<T, E>
+
+api<T, E>(config) where T, E are the types of data and the expected error
+
+```ts
+api<Post[], string>({
+  method: 'GET',
+  url: 'posts',
+  baseURL: 'https://jsonplaceholder.typicode.com/',
+  action: FETCH_POSTS,
+});
+```
+
+Request Config:
+
+* The available request config is <a href="https://github.com/axios/axios#request-config">axios request config</a> **with three more params**:
+* `action` - `optional` The action that will be dispatched when the request status changed (loading, success, and error)
+* `onSuccess` - `optional` A callback if the request is done successfully
+* `onError` - `optional` A callback if the request failed
+
+## fetchingReducer
+
+Updating the redux store according the dispatched actions and the request status
+It handles loading, success, fail of fetching the data
+
+```ts
+combineReducers({
+  posts: fetchingReducer<Post[], string>(FETCH_POSTS),
+});
+```
+
+## RemoteComponent
+
+Renders the right component according the current status of data
+
+```ts
+<RemoteComponent
+  remote={posts}
+  loading={PostsLoading}
+  reject={PostsError}
+  success={ListPosts}
+/>
+```
+
+* `remote` - The Remote data item. It should be of type RemoteData<T, E> where `T` is the data type and `E` is the error type respectively
+* `success` - The component to be rendered when data is fetched. The Fetched data (T) will be passed to this component
+* `loading` - `optional` The component to be rendered if remote data is in loading status.
+* `reject` - `optional` The component to be rendered if an error occurred. an Error (E) will be passed to this component
+
+You can check the `example` folder for more details
+
+## Creating a custom reducer for updating the store
+
+Create a reducer and manually update the store with your custom code you may need to access request
 
 reducer.ts
 
@@ -93,7 +205,7 @@ export default (
 };
 ```
 
-Updating the redux store according the dispatched actions
+Updating the redux store according the dispatched actions and the request status
 
 * The initial state of the remote data is `NotAsked`
 * We have 3 more possible kinds for the data (Loading, Success, and Error)
@@ -103,53 +215,6 @@ Updating the redux store according the dispatched actions
   * `data`: ONLY when the request is succeeded
   * `error`: ONLY when the request is failed
   * `headers`: ONLY when the request is succeeded or failed
-
-PostsComponent.tsx
-
-```tsx
-const PostsLoading = () => <>Loading posts...</>;
-const PostsError = ({ err }: { err: string }) => <>{err}</>;
-const ListPosts = ({ data }: { data: Post[] }) => <>Here you can use the fetched data</>
-
-type PostsContainerProps = {
-  fetchPosts: () => Promise<Post[]>;
-  posts: RemoteData<Post[], string>;
-};
-
-const PostsContainer = ({ fetchPosts, posts }: PostsContainerProps) => {
-  React.useEffect(() => {
-    fetchPosts();
-  }, [fetchPosts]);
-
-  return (
-    <RemoteComponent
-      remote={posts}
-      loading={PostsLoading}
-      reject={PostsError}
-      success={ListPosts}
-    />
-  );
-};
-
-const mapStateToProps = ({ posts }: StoreState) => ({
-  posts: posts.posts,
-});
-const mapDispatchToProps = (
-  dispatch,
-) => ({
-  fetchPosts: () => dispatch(fetchPostsAction()),
-});
-connect(mapStateToProps, mapDispatchToProps)(PostsContainer);
-```
-
-Available props:
-
-* `remote` - The Remote data item should be of type RemoteData<T, E> where `T` is the data type and `E` is the error type
-* `success` - The component to be rendered when data is fetched. The Fetched data (T) will be passed to the component
-* `loading` - `optional` The component to be rendered while remote data is being fetched.
-* `reject` - `optional` The component to be rendered when an error occurred. an Error (E) will be passed to the component
-
-You can check the `example` folder for more details
 
 ## Development
 
