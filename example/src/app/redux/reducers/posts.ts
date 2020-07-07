@@ -1,5 +1,5 @@
 import { FETCH_POSTS } from '../actions/posts';
-import { RemoteData, RemoteDataKind, Action } from 'remote-data';
+import { RemoteData, RemoteKind, Action } from 'remote-data';
 import { Post } from '../../models';
 
 export type PostsStore = {
@@ -8,7 +8,7 @@ export type PostsStore = {
 
 const initialState: PostsStore = {
   posts: {
-    kind: RemoteDataKind.NotAsked,
+    kind: RemoteKind.NotAsked,
   },
 };
 
@@ -18,28 +18,28 @@ export default (
 ): PostsStore => {
   if (action.type === FETCH_POSTS) {
     switch (action.kind) {
-      case RemoteDataKind.Loading:
+      case RemoteKind.Loading:
         return {
           ...state,
           posts: {
-            kind: RemoteDataKind.Loading,
+            kind: RemoteKind.Loading,
           },
         };
 
-      case RemoteDataKind.Success:
+      case RemoteKind.Success:
         return {
           ...state,
           posts: {
-            kind: RemoteDataKind.Success,
+            kind: RemoteKind.Success,
             data: action.data,
           },
         };
 
-      case RemoteDataKind.Reject:
+      case RemoteKind.Reject:
         return {
           ...state,
           posts: {
-            kind: RemoteDataKind.Reject,
+            kind: RemoteKind.Reject,
             error: action.error,
           },
         };

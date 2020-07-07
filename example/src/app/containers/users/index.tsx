@@ -3,7 +3,7 @@ import { AnyAction } from 'redux';
 import { connect } from 'react-redux';
 import { ThunkDispatch } from 'redux-thunk';
 import { StoreState, User } from '../../models';
-import { RemoteData, RemoteDataContainer } from 'remote-data';
+import { RemoteData, RemoteComponent } from 'remote-data';
 import { fetchUsers as fetchUsersAction } from '../../redux/actions/users';
 import { UsersLoading, UsersError, ListUsers } from '../../components';
 
@@ -19,7 +19,7 @@ const UsersContainer = ({ fetchUsers, users }: UsersContainerProps) => {
   return (
     <>
       <h1 className="page-title">Users</h1>
-      <RemoteDataContainer
+      <RemoteComponent
         remote={users}
         loading={UsersLoading}
         reject={UsersError}

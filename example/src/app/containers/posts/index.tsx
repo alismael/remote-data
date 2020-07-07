@@ -3,7 +3,7 @@ import { AnyAction } from 'redux';
 import { connect } from 'react-redux';
 import { ThunkDispatch } from 'redux-thunk';
 import { StoreState, Post } from '../../models';
-import { RemoteData, RemoteDataContainer } from 'remote-data';
+import { RemoteData, RemoteComponent } from 'remote-data';
 import { fetchPosts as fetchPostsAction } from '../../redux/actions/posts';
 import { PostsError, PostsLoading, ListPosts } from '../../components';
 
@@ -20,7 +20,7 @@ const PostsContainer = ({ fetchPosts, posts }: PostsContainerProps) => {
   return (
     <>
       <h1 className="page-title">Posts</h1>
-      <RemoteDataContainer
+      <RemoteComponent
         remote={posts}
         loading={PostsLoading}
         reject={PostsError}

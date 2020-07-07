@@ -1,4 +1,4 @@
-export enum RemoteDataKind {
+export enum RemoteKind {
   NotAsked = 'NOT_ASKED',
   Loading = 'LOADING',
   Success = 'SUCCESS',
@@ -6,20 +6,20 @@ export enum RemoteDataKind {
 }
 
 type NotAsked = {
-  kind: RemoteDataKind.NotAsked;
+  kind: RemoteKind.NotAsked;
 };
 
 type Loading = {
-  kind: RemoteDataKind.Loading;
+  kind: RemoteKind.Loading;
 };
 
 type Success<T> = {
-  kind: RemoteDataKind.Success;
+  kind: RemoteKind.Success;
   data: T;
 };
 
 type Reject<E> = {
-  kind: RemoteDataKind.Reject;
+  kind: RemoteKind.Reject;
   error: E;
 };
 

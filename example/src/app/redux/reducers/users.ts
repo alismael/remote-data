@@ -1,5 +1,5 @@
 import { FETCH_USERS } from '../actions/users';
-import { RemoteData, RemoteDataKind, Action } from 'remote-data';
+import { RemoteData, RemoteKind, Action } from 'remote-data';
 import { User } from '../../models';
 
 export type UsersStore = {
@@ -8,7 +8,7 @@ export type UsersStore = {
 
 const initialState: UsersStore = {
   users: {
-    kind: RemoteDataKind.NotAsked,
+    kind: RemoteKind.NotAsked,
   },
 };
 
@@ -18,28 +18,28 @@ export default (
 ): UsersStore => {
   if (action.type === FETCH_USERS) {
     switch (action.kind) {
-      case RemoteDataKind.Loading:
+      case RemoteKind.Loading:
         return {
           ...state,
           users: {
-            kind: RemoteDataKind.Loading,
+            kind: RemoteKind.Loading,
           },
         };
 
-      case RemoteDataKind.Success:
+      case RemoteKind.Success:
         return {
           ...state,
           users: {
-            kind: RemoteDataKind.Success,
+            kind: RemoteKind.Success,
             data: action.data,
           },
         };
 
-      case RemoteDataKind.Reject:
+      case RemoteKind.Reject:
         return {
           ...state,
           users: {
-            kind: RemoteDataKind.Reject,
+            kind: RemoteKind.Reject,
             error: action.error,
           },
         };

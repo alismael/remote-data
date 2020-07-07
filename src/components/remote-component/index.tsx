@@ -1,32 +1,32 @@
 import * as React from 'react';
-import { RemoteData, RemoteDataKind } from '../../models';
+import { RemoteData, RemoteKind } from '../../models';
 
-interface RemoteDataContainerProps<T, E> {
+interface RemoteComponentProps<T, E> {
   remote: RemoteData<T, E>;
   success: ({ data }: { data: T }) => JSX.Element;
   loading?: () => JSX.Element;
   reject?: ({ err }: { err: E }) => JSX.Element;
 }
 
-const RemoteDataContainer = <T, E>({
+const RemoteComponent = <T, E>({
   remote,
   loading,
   reject,
   success,
-}: RemoteDataContainerProps<T, E>) => {
+}: RemoteComponentProps<T, E>) => {
   switch (remote.kind) {
-    case RemoteDataKind.NotAsked:
+    case RemoteKind.NotAsked:
       return <div></div>;
 
-    case RemoteDataKind.Loading:
+    case RemoteKind.Loading:
       if (loading) return loading();
       return <div></div>;
 
-    case RemoteDataKind.Reject:
+    case RemoteKind.Reject:
       if (reject) return reject({ err: remote.error });
       return <div></div>;
 
-    case RemoteDataKind.Success:
+    case RemoteKind.Success:
       return success({ data: remote.data });
 
     default:
@@ -34,4 +34,4 @@ const RemoteDataContainer = <T, E>({
   }
 };
 
-export default RemoteDataContainer;
+export default RemoteComponent;
