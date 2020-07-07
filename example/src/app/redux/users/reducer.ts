@@ -1,53 +1,15 @@
-import { FETCH_USERS } from './constants';
-import { RemoteData, RemoteKind, Action } from 'remote-data';
+import { Reducer } from 'react';
+import { combineReducers } from 'redux';
+import { fetchingReducer, RemoteData } from 'remote-data';
 import { User } from '../../models';
+import { FETCH_USERS } from './constants';
 
 export type UsersStore = {
   users: RemoteData<User[], string>;
 };
 
-const initialState: UsersStore = {
-  users: {
-    kind: RemoteKind.NotAsked,
-  },
-};
+const usersReducer: Reducer<UsersStore, any> = combineReducers({
+  users: fetchingReducer<User[], string>(FETCH_USERS),
+});
 
-export default (
-  state: UsersStore = initialState,
-  action: Action<User[], string>,
-): UsersStore => {
-  if (action.type === FETCH_USERS) {
-    switch (action.kind) {
-      case RemoteKind.Loading:
-        return {
-          ...state,
-          users: {
-            kind: RemoteKind.Loading,
-          },
-        };
-
-      case RemoteKind.Success:
-        return {
-          ...state,
-          users: {
-            kind: RemoteKind.Success,
-            data: action.data,
-          },
-        };
-
-      case RemoteKind.Reject:
-        return {
-          ...state,
-          users: {
-            kind: RemoteKind.Reject,
-            error: action.error,
-          },
-        };
-
-      default:
-        return state;
-    }
-  }
-
-  return state;
-};
+export default usersReducer;
