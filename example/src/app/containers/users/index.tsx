@@ -8,7 +8,7 @@ import { fetchUsers as fetchUsersAction } from '../../redux/actions/users';
 import { UsersLoading, UsersError, ListUsers } from '../../components';
 
 type UsersContainerProps = {
-  fetchUsers: () => Promise<void>;
+  fetchUsers: () => Promise<User[]>;
   users: RemoteData<User[], string>;
 };
 const UsersContainer = ({ fetchUsers, users }: UsersContainerProps) => {
