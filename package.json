@@ -63,5 +63,19 @@
   "files": [
     "dist"
   ],
+  "keywords": [
+    "remote-data",
+    "remote-component",
+    "react",
+    "redux",
+    "component",
+    "components",
+    "react-remote-component",
+    "react-remote-data",
+    "api",
+    "asynchronous",
+    "async",
+    "fetching"
+  ],
   "dependencies": {}
 }
