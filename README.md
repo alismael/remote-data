@@ -10,6 +10,12 @@ These libraries are not bundled with remote-data and required at runtime:
 
 * [**react**](https://www.npmjs.com/package/react)
 
+#### Install
+
+```sh
+npm install github:alismael/remote-data
+```
+
 #### Usage
 
 Performing a `GET` request to fetch the data
