@@ -1,7 +1,7 @@
 {
   "name": "remote-data",
   "version": "1.0.0",
-  "description": "Handling asynchronous fetching of data with React/Redux",
+  "description": "Handling Asynchronous fetching of data with React & Redux",
   "author": "alismael",
   "license": "MIT",
   "repository": "alismael/remote-data",

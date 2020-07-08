@@ -1,6 +1,6 @@
 # remote-data
 
-> Handling fetching asynchronous data with React/Redux
+> Handling Asynchronous fetching of data with React & Redux
 
 ## Dependencies
 
