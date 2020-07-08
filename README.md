@@ -6,7 +6,7 @@
 
 ### Required Peer Dependencies
 
-These libraries are not bundled with RemoteData and required at runtime:
+These libraries are not bundled with remote-data and required at runtime:
 
 * [**react**](https://www.npmjs.com/package/react)
 
