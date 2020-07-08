@@ -218,23 +218,12 @@ Updating the redux store according the dispatched actions and the request status
 
 ## Development
 
-Install dependencies:
+To setup and run a local copy
 
-```sh
-npm install
-```
-
-Run examples at [http://localhost:3000/](http://localhost:3000/):
-
-```sh
-npm start
-```
-
-Build:
-
-```sh
-npm run build
-```
+1. Clone this repo with `git clone https://github.com/alismael/remote-data`
+2. Run `npm install` in the root folder
+3. Run `npm install` in the example folder
+4. run `npm start` in the root and example folders.
 
 ## License
 
