@@ -146,7 +146,7 @@ combineReducers({
 });
 ```
 
-* `actionType`: it should be the same as the action passed to the `api` request wrapper
+* `actionType`: it should be the same as the action passed to the [`api`](#apit-e) request wrapper
 
 ## RemoteComponent
 
@@ -165,10 +165,10 @@ import { RemoteComponent } from 'remote-data';
 
 Only `remote` and `success` are required
 
-* `remote` passing your remote data here, it should be of type RemoteData<T, E>
+* `remote` passing your remote data here, it should be of type [RemoteData<T, E>](#remotedatat-e)
 * `loading`, `success`, and `reject` will be rendered for the relevant state
 
-## RemoteData
+## RemoteData<T, E>
 
 RemoteData<T, E> where `T` is the data type and `E` is the error type respectively
 
@@ -201,10 +201,42 @@ type Reject<E> = {
 type RemoteData<T, E> = NotAsked | Loading | Success<T> | Reject<E>;
 ```
 
-Usage example
+## Action<T, E>
+
+Action<T, E> where `T` is the data type and `E` is the error type respectively
 
 ```ts
-const posts = RemoteData<Post[], ErrorResponse>
+type ActionType = string;
+
+type NotAskedAction = {
+  type: ActionType;
+  kind: RemoteKind.NotAsked;
+};
+
+type LoadingAction = {
+  type: ActionType;
+  kind: RemoteKind.Loading;
+};
+
+type SuccessAction<T> = {
+  type: ActionType;
+  kind: RemoteKind.Success;
+  data: T;
+  headers: any;
+};
+
+type RejectAction<E> = {
+  type: ActionType;
+  kind: RemoteKind.Reject;
+  error: E;
+  headers: any;
+};
+
+type Action<T, E> =
+  | NotAskedAction
+  | LoadingAction
+  | SuccessAction<T>
+  | RejectAction<E>;
 ```
 
 ## Creating a custom reducer to manually update the store
@@ -271,13 +303,7 @@ export default (
 * Verify the action type and kind
 * Update your state
 
-The dispatched action attributes
-
-* `type`: the dispatched action type
-* `kind`: the current state of the request
-* `data`: the requested date (T)
-* `error`: the request error (E)
-* `headers`: request headers
+`action` is of type [Action<T, E>](#actiont-e)
 
 ## Development
 
