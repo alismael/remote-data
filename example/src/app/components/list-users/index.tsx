@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { User, ErrorResponse } from '../../models';
 
-export const UsersLoading = () => <>Loading users...</>;
+export const UsersLoading = () => <div>Loading users...</div>;
 export const UsersError = ({ error }: { error: ErrorResponse }) => (
-  <>{error.error}</>
+  <div>{error.error}</div>
 );
 
 const ListUsers = ({ users }: { users: User[] }) => (

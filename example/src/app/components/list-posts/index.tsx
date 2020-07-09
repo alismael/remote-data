@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { Post, ErrorResponse } from '../../models';
 
-export const PostsLoading = () => <>Loading posts...</>;
-export const PostsError = ({ error }: { error: ErrorResponse }) => <>{error.error}</>;
+export const PostsLoading = () => <div>Loading posts...</div>;
+export const PostsError = ({ error }: { error: ErrorResponse }) => <div>{error.error}</div>;
 
 const ListPosts = ({ posts }: { posts: Post[] }) => (
   <table className="table">
