@@ -1,11 +1,17 @@
 import * as React from 'react';
-import { RemoteData, RemoteKind } from '../../models';
+import {
+  RemoteKind,
+  RemoteDataAggregate,
+  SuccessAggregate,
+  RejectAggregate,
+} from '../../models';
+import { remoteToReject, remoteToSuccess } from '../../utils';
 
-interface RemoteComponentProps<T, E> {
-  remote: RemoteData<T, E>;
-  success: ({ data }: { data: T }) => JSX.Element;
+interface RemoteComponentProps<_T, _E> {
+  remote: RemoteDataAggregate<any, any>;
+  success: (data: SuccessAggregate<any>) => JSX.Element;
   loading?: () => JSX.Element;
-  reject?: ({ err }: { err: E }) => JSX.Element;
+  reject?: (reject: RejectAggregate<any>) => JSX.Element;
 }
 
 const RemoteComponent = <T, E>({
@@ -14,24 +20,22 @@ const RemoteComponent = <T, E>({
   reject,
   success,
 }: RemoteComponentProps<T, E>) => {
-  switch (remote.kind) {
-    case RemoteKind.NotAsked:
-      return <React.Fragment></React.Fragment>;
+  const remoteData = Object.values(remote);
 
-    case RemoteKind.Loading:
-      if (loading) return loading();
-      return <React.Fragment></React.Fragment>;
+  if (remoteData.some((r) => r.kind === RemoteKind.NotAsked))
+    return <React.Fragment></React.Fragment>;
 
-    case RemoteKind.Reject:
-      if (reject) return reject({ err: remote.error });
-      return <React.Fragment></React.Fragment>;
-
-    case RemoteKind.Success:
-      return success({ data: remote.data });
-
-    default:
-      return <React.Fragment></React.Fragment>;
+  if (remoteData.some((r) => r.kind === RemoteKind.Loading)) {
+    if (loading) return loading();
+    return <React.Fragment></React.Fragment>;
   }
+
+  if (remoteData.find((r) => r.kind === RemoteKind.Reject)) {
+    if (reject) return reject(remoteToReject(remote));
+    return <React.Fragment></React.Fragment>;
+  }
+
+  return success(remoteToSuccess(remote));
 };
 
 export default RemoteComponent;

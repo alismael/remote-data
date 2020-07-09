@@ -5,20 +5,20 @@ export enum RemoteKind {
   Reject = 'REJECT',
 }
 
-type NotAsked = {
+export type NotAsked = {
   kind: RemoteKind.NotAsked;
 };
 
-type Loading = {
+export type Loading = {
   kind: RemoteKind.Loading;
 };
 
-type Success<T> = {
+export type Success<T> = {
   kind: RemoteKind.Success;
   data: T;
 };
 
-type Reject<E> = {
+export type Reject<E> = {
   kind: RemoteKind.Reject;
   error: E;
 };
