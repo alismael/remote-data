@@ -2,9 +2,11 @@ import * as React from 'react';
 import { User, ErrorResponse } from '../../models';
 
 export const UsersLoading = () => <>Loading users...</>;
-export const UsersError = ({ err }: { err: ErrorResponse }) => <>{err.error}</>;
+export const UsersError = ({ error }: { error: ErrorResponse }) => (
+  <>{error.error}</>
+);
 
-const ListUsers = ({ data }: { data: User[] }) => (
+const ListUsers = ({ users }: { users: User[] }) => (
   <table className="table">
     <thead>
       <tr>
@@ -16,7 +18,7 @@ const ListUsers = ({ data }: { data: User[] }) => (
       </tr>
     </thead>
     <tbody>
-      {data.map((u) => (
+      {users.map((u) => (
         <tr key={u.id}>
           <th scope="row">{u.id}</th>
           <td>{u.username}</td>

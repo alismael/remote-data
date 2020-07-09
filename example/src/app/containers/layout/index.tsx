@@ -21,6 +21,11 @@ const Header = () => (
             Posts
           </NavLink>
         </li>
+        <li className="nav__item">
+          <NavLink className="nav__link" to="/users-posts">
+            (Multiple) Users & Posts
+          </NavLink>
+        </li>
       </ul>
     </div>
   </header>

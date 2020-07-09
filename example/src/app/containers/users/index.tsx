@@ -20,10 +20,10 @@ const UsersContainer = ({ fetchUsers, users }: UsersContainerProps) => {
     <>
       <h1 className="page-title">Users</h1>
       <RemoteComponent
-        remote={users}
+        remote={{ users }}
         loading={UsersLoading}
-        reject={UsersError}
-        success={ListUsers}
+        reject={({ error }) => <UsersError error={error} />}
+        success={({ users }) => <ListUsers users={users} />}
       />
     </>
   );

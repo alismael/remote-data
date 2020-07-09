@@ -2,9 +2,9 @@ import * as React from 'react';
 import { Post, ErrorResponse } from '../../models';
 
 export const PostsLoading = () => <>Loading posts...</>;
-export const PostsError = ({ err }: { err: ErrorResponse }) => <>{err.error}</>;
+export const PostsError = ({ error }: { error: ErrorResponse }) => <>{error.error}</>;
 
-const ListPosts = ({ data }: { data: Post[] }) => (
+const ListPosts = ({ posts }: { posts: Post[] }) => (
   <table className="table">
     <thead>
       <tr>
@@ -15,7 +15,7 @@ const ListPosts = ({ data }: { data: Post[] }) => (
       </tr>
     </thead>
     <tbody>
-      {data.map((p) => (
+      {posts.map((p) => (
         <tr key={p.id}>
           <th scope="row">{p.id}</th>
           <td>{p.userId}</td>
