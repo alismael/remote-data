@@ -91,10 +91,10 @@ const PostsContainer = ({ fetchPosts, posts }: PostsContainerProps) => {
 
   return (
     <RemoteComponent
-      remote={posts}
+      remote={{ posts }}
       loading={PostsLoading}
-      reject={PostsError}
-      success={ListPosts}
+      reject={({ posts }) => <PostsError error={posts} />}
+      success={({ posts }) => <ListPosts posts={posts} />}
     />
   );
 };
@@ -156,10 +156,10 @@ Handling the display of your remote data.
 import { RemoteComponent } from 'remote-data';
 
 <RemoteComponent
-  remote={posts}
+  remote={{ posts }}
   loading={PostsLoading}
-  reject={PostsError}
-  success={ListPosts}
+  reject={({ posts }) => <PostsError error={posts} />}
+  success={({ posts }) => <ListPosts posts={posts} />}
 />
 ```
 
@@ -167,6 +167,8 @@ Only `remote` and `success` are required
 
 * `remote` passing your remote data here, it should be of type [RemoteData<T, E>](#remotedatat-e)
 * `loading`, `success`, and `reject` will be rendered for the relevant state
+
+You can handle displaying multiple remote data at once with one component. [here](#handle-displaying-multiple-remote-data-with-remotecomponent-component)
 
 ## RemoteData<T, E>
 
@@ -237,6 +239,34 @@ type Action<T, E> =
   | LoadingAction
   | SuccessAction<T>
   | RejectAction<E>;
+```
+
+## Handle displaying multiple remote data with `RemoteComponent` component
+
+```tsx
+<RemoteComponent
+  remote={{ posts, users }}
+  loading={() => (
+    <>
+      <PostsLoading />
+      <UsersLoading />
+    </>
+  )}
+  reject={({ posts, users }) => (
+    <>
+      {users && <UsersError error={users} />}
+      {posts && <PostsError error={posts} />}
+    </>
+  )}
+  success={({ posts, users }) => (
+    <>
+      <h1 className="page-title">Users</h1>
+      <ListUsers users={users} />
+      <h1 className="page-title">Posts</h1>
+      <ListPosts posts={posts} />
+    </>
+  )}
+/>
 ```
 
 ## Creating a custom reducer to manually update the store
