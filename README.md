@@ -36,11 +36,11 @@ actions.ts
 
 ```ts
 import { api } from 'remote-data';
-import { Post } from '../models';
+import { Post, ErrorResponse } from '../models';
 import { FETCH_POSTS } from './constants';
 
 const fetchPosts = () =>
-  api<Post[], string>({
+  api<Post[], ErrorResponse>({
     method: 'GET',
     url: 'posts',
     baseURL: 'https://jsonplaceholder.typicode.com/',
@@ -56,15 +56,15 @@ reducer.ts
 import { Reducer } from 'react';
 import { combineReducers } from 'redux';
 import { fetchingReducer, RemoteData } from 'remote-data';
-import { Post } from '../../models';
+import { Post, ErrorResponse } from '../../models';
 import { FETCH_POSTS } from './constants';
 
 export type PostsStore = {
-  posts: RemoteData<Post[], string>;
+  posts: RemoteData<Post[], ErrorResponse>;
 };
 
 const postsReducer: Reducer<PostsStore, any> = combineReducers({
-  posts: fetchingReducer<Post[], string>(FETCH_POSTS),
+  posts: fetchingReducer<Post[], ErrorResponse>(FETCH_POSTS),
 });
 
 export default postsReducer;
@@ -81,7 +81,7 @@ const ListPosts = ({ data }: { data: Post[] }) => <>Here you can use the fetched
 
 type PostsContainerProps = {
   fetchPosts: () => Promise<Post[]>;
-  posts: RemoteData<Post[], string>;
+  posts: RemoteData<Post[], ErrorResponse>;
 };
 
 const PostsContainer = ({ fetchPosts, posts }: PostsContainerProps) => {
@@ -119,7 +119,7 @@ api<T, E>(config) where T, E are the types of data and the expected error respec
 ```ts
 import { api } from 'remote-data';
 
-api<Post[], string>({
+api<Post[], ErrorResponse>({
   method: 'GET',
   url: 'posts',
   baseURL: 'https://jsonplaceholder.typicode.com/',
@@ -142,7 +142,7 @@ fetchingReducer<T, E>(actionType) a reducer for managing the state of the remote
 import { fetchingReducer } from 'remote-data';
 
 combineReducers({
-  posts: fetchingReducer<Post[], string>(FETCH_POSTS),
+  posts: fetchingReducer<Post[], ErrorResponse>(FETCH_POSTS),
 });
 ```
 
@@ -204,7 +204,7 @@ type RemoteData<T, E> = NotAsked | Loading | Success<T> | Reject<E>;
 Usage example
 
 ```ts
-const posts = RemoteData<Post[], string>
+const posts = RemoteData<Post[], ErrorResponse>
 ```
 
 ## Creating a custom reducer to manually update the store
@@ -213,11 +213,11 @@ You can create your custom reducer , here's an example to do so:
 
 ```ts
 import { RemoteData, RemoteKind, Action } from 'remote-data';
-import { Post } from '../../models';
+import { Post, ErrorResponse } from '../../models';
 import { FETCH_POSTS } from './constants';
 
 export type PostsStore = {
-  posts: RemoteData<Post[], string>;
+  posts: RemoteData<Post[], ErrorResponse>;
 };
 
 const initialState: PostsStore = {
@@ -228,7 +228,7 @@ const initialState: PostsStore = {
 
 export default (
   state: PostsStore = initialState,
-  action: Action<Post[], string>,
+  action: Action<Post[], ErrorResponse>,
 ): PostsStore => {
   if (action.type === FETCH_POSTS) {
     switch (action.kind) {
