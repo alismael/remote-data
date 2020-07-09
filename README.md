@@ -19,6 +19,8 @@ This library provides:
 These libraries are not bundled with remote-data and required at runtime:
 
 * [**react**](https://www.npmjs.com/package/react)
+* [**redux**](https://www.npmjs.com/package/redux)
+* [**axios**](https://www.npmjs.com/package/axios)
 
 #### Install
 
