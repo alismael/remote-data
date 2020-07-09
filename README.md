@@ -1,6 +1,16 @@
 # remote-data
 
-> Handling Asynchronous fetching of data with React & Redux
+> Handling modeling, fetching, and displaying remote data in React/Redux apps
+
+## Idea
+
+A React library aimed at modeling, fetching, and displaying remote data and the states it can be in.
+
+This library provides:
+
+* an [api](#apit-e) request wrapper based on <a href="https://github.com/axios/axios">Axios</a> to make the API calls
+* a [fetchingReducer](#fetchingreducer) to update the store
+* a [RemoteComponent](#remotecomponent) to handle displaying remote data
 
 ## Dependencies
 
@@ -36,7 +46,7 @@ const fetchPosts = () =>
   });
 ```
 
-Adding reducer to update the store
+Adding a reducer to update the store
 
 reducer.ts
 
@@ -58,7 +68,7 @@ const postsReducer: Reducer<PostsStore, any> = combineReducers({
 export default postsReducer;
 ```
 
-Handling your view with `RemoteComponent` component
+Displaying your remote data
 
 PostsComponent.tsx
 
@@ -98,11 +108,15 @@ const mapDispatchToProps = (
 connect(mapStateToProps, mapDispatchToProps)(PostsContainer);
 ```
 
+You can check the `example` folder for more details
+
 ## api<T, E>
 
-api<T, E>(config) where T, E are the types of data and the expected error
+api<T, E>(config) where T, E are the types of data and the expected error respectively
 
 ```ts
+import { api } from 'remote-data';
+
 api<Post[], string>({
   method: 'GET',
   url: 'posts',
@@ -113,27 +127,32 @@ api<Post[], string>({
 
 Request Config:
 
-* The available request config is <a href="https://github.com/axios/axios#request-config">axios request config</a> **with three more params**:
-* `action` - `optional` The action that will be dispatched when the request status changed (loading, success, and error)
-* `onSuccess` - `optional` A callback if the request is done successfully
-* `onError` - `optional` A callback if the request failed
+In addition to axios <a href="https://github.com/axios/axios#request-config">request config</a> there are **three more options**:
+
+* `action`: is the action type that will be dispatched when request state changed. if not provided no action will be dispatched
+* `onSuccess`, `onError`: are the callbacks to be triggered for the relevant request state
 
 ## fetchingReducer
 
-Updating the redux store according the dispatched actions and the request status
-It handles loading, success, fail of fetching the data
+fetchingReducer<T, E>(actionType) a reducer for managing the state of the remote data
 
 ```ts
+import { fetchingReducer } from 'remote-data';
+
 combineReducers({
   posts: fetchingReducer<Post[], string>(FETCH_POSTS),
 });
 ```
 
+* `actionType`: it should be the same as the action passed to the `api` request wrapper
+
 ## RemoteComponent
 
-Renders the right component according the current status of data
+Handling the display of your remote data.
 
-```ts
+```tsx
+import { RemoteComponent } from 'remote-data';
+
 <RemoteComponent
   remote={posts}
   loading={PostsLoading}
@@ -142,18 +161,53 @@ Renders the right component according the current status of data
 />
 ```
 
-* `remote` - The Remote data item. It should be of type RemoteData<T, E> where `T` is the data type and `E` is the error type respectively
-* `success` - The component to be rendered when data is fetched. The Fetched data (T) will be passed to this component
-* `loading` - `optional` The component to be rendered if remote data is in loading status.
-* `reject` - `optional` The component to be rendered if an error occurred. an Error (E) will be passed to this component
+Only `remote` and `success` are required
 
-You can check the `example` folder for more details
+* `remote` passing your remote data here, it should be of type RemoteData<T, E>
+* `loading`, `success`, and `reject` will be rendered for the relevant state
 
-## Creating a custom reducer for updating the store
+## RemoteData
 
-Create a reducer and manually update the store with your custom code you may need to access request
+RemoteData<T, E> where `T` is the data type and `E` is the error type respectively
 
-reducer.ts
+```ts
+enum RemoteKind {
+  NotAsked = 'NOT_ASKED',
+  Loading = 'LOADING',
+  Success = 'SUCCESS',
+  Reject = 'REJECT',
+}
+
+type NotAsked = {
+  kind: RemoteKind.NotAsked;
+};
+
+type Loading = {
+  kind: RemoteKind.Loading;
+};
+
+type Success<T> = {
+  kind: RemoteKind.Success;
+  data: T;
+};
+
+type Reject<E> = {
+  kind: RemoteKind.Reject;
+  error: E;
+};
+
+type RemoteData<T, E> = NotAsked | Loading | Success<T> | Reject<E>;
+```
+
+Usage example
+
+```ts
+const posts = RemoteData<Post[], string>
+```
+
+## Creating a custom reducer to manually update the store
+
+You can create your custom reducer , here's an example to do so:
 
 ```ts
 import { RemoteData, RemoteKind, Action } from 'remote-data';
@@ -211,16 +265,17 @@ export default (
 };
 ```
 
-Updating the redux store according the dispatched actions and the request status
+* Initialize your state
+* Verify the action type and kind
+* Update your state
 
-* The initial state of the remote data is `NotAsked`
-* We have 3 more possible kinds for the data (Loading, Success, and Error)
-* The dispatched action attributes
-  * `type`: Determines the action type in the previous example it's FETCH_POSTS so we can differentiate between different actions
-  * `kind`: Determines the current status of the remote data (NotAsked, Loading, Success, and Error)
-  * `data`: ONLY when the request is succeeded
-  * `error`: ONLY when the request is failed
-  * `headers`: ONLY when the request is succeeded or failed
+The dispatched action attributes
+
+* `type`: the dispatched action type
+* `kind`: the current state of the request
+* `data`: the requested date (T)
+* `error`: the request error (E)
+* `headers`: request headers
 
 ## Development
 
@@ -229,7 +284,7 @@ To setup and run a local copy
 1. Clone this repo with `git clone https://github.com/alismael/remote-data`
 2. Run `npm install` in the root folder
 3. Run `npm install` in the example folder
-4. run `npm start` in the root and example folders.
+4. run `npm start` in the root and example folders
 
 ## License
 
