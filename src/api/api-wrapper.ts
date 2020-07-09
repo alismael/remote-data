@@ -2,6 +2,8 @@ import axios, { AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios';
 import { Dispatch } from 'redux';
 import { Action, RemoteKind } from '../models';
 
+const error = (err: AxiosError) => err.response?.data;
+
 interface Options<T, E> extends AxiosRequestConfig {
   action?: string;
   onSuccess?: (res: T) => void;
@@ -36,10 +38,11 @@ const api = <T, E>(
           dispatch({
             type: action,
             kind: RemoteKind.Reject,
-            error: res.response?.headers['x-error'],
+            error: error(res),
             headers: res.response?.headers,
           });
-        return res.response?.headers['x-error'];
+        if (onError) onError(error(res));
+        return error(res);
       }
     };
 
