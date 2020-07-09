@@ -2,14 +2,14 @@ import * as React from 'react';
 import { AnyAction } from 'redux';
 import { connect } from 'react-redux';
 import { ThunkDispatch } from 'redux-thunk';
-import { StoreState, User } from '../../models';
+import { StoreState, User, ErrorResponse } from '../../models';
 import { RemoteData, RemoteComponent } from 'remote-data';
 import { fetchUsers as fetchUsersAction } from '../../redux/users/actions';
 import { UsersLoading, UsersError, ListUsers } from '../../components';
 
 type UsersContainerProps = {
   fetchUsers: () => Promise<User[]>;
-  users: RemoteData<User[], string>;
+  users: RemoteData<User[], ErrorResponse>;
 };
 const UsersContainer = ({ fetchUsers, users }: UsersContainerProps) => {
   React.useEffect(() => {

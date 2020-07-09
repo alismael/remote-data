@@ -2,14 +2,14 @@ import * as React from 'react';
 import { AnyAction } from 'redux';
 import { connect } from 'react-redux';
 import { ThunkDispatch } from 'redux-thunk';
-import { StoreState, Post } from '../../models';
+import { StoreState, Post, ErrorResponse } from '../../models';
 import { RemoteData, RemoteComponent } from 'remote-data';
 import { fetchPosts as fetchPostsAction } from '../../redux/posts/actions';
 import { PostsError, PostsLoading, ListPosts } from '../../components';
 
 type PostsContainerProps = {
   fetchPosts: () => Promise<Post[]>;
-  posts: RemoteData<Post[], string>;
+  posts: RemoteData<Post[], ErrorResponse>;
 };
 
 const PostsContainer = ({ fetchPosts, posts }: PostsContainerProps) => {

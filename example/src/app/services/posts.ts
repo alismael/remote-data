@@ -1,9 +1,9 @@
 import { api } from 'remote-data';
-import { Post } from '../models';
+import { Post, ErrorResponse } from '../models';
 import { FETCH_POSTS } from '../redux/posts/constants';
 
 const fetchPosts = () =>
-  api<Post[], string>({
+  api<Post[], ErrorResponse>({
     method: 'GET',
     url: 'posts',
     baseURL: 'https://jsonplaceholder.typicode.com/',

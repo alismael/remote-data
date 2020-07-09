@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { Post } from '../../models';
+import { Post, ErrorResponse } from '../../models';
 
 export const PostsLoading = () => <>Loading posts...</>;
-export const PostsError = ({ err }: { err: string }) => <>{err}</>;
+export const PostsError = ({ err }: { err: ErrorResponse }) => <>{err.error}</>;
 
 const ListPosts = ({ data }: { data: Post[] }) => (
   <table className="table">

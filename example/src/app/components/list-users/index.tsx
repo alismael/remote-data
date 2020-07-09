@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { User } from '../../models';
+import { User, ErrorResponse } from '../../models';
 
 export const UsersLoading = () => <>Loading users...</>;
-export const UsersError = ({ err }: { err: string }) => <>{err}</>;
+export const UsersError = ({ err }: { err: ErrorResponse }) => <>{err.error}</>;
 
 const ListUsers = ({ data }: { data: User[] }) => (
   <table className="table">
