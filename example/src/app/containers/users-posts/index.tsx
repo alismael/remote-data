@@ -12,6 +12,7 @@ import {
   ListPosts,
   UsersError,
   ListUsers,
+  UsersLoading,
 } from '../../components';
 
 type UsersPostsContainerProps = {
@@ -37,16 +38,23 @@ const UsersPostsContainer = ({
       <h1 className="page-title">(Multiple) Users & Posts</h1>
       <RemoteComponent
         remote={{ posts, users }}
-        loading={PostsLoading}
+        loading={() => (
+          <>
+            <PostsLoading />
+            <UsersLoading />
+          </>
+        )}
         reject={({ posts, users }) => (
           <>
-            <UsersError error={users} />
-            <PostsError error={posts} />
+            {users && <UsersError error={users} />}
+            {posts && <PostsError error={posts} />}
           </>
         )}
         success={({ posts, users }) => (
           <>
+            <h1 className="page-title">Users</h1>
             <ListUsers users={users} />
+            <h1 className="page-title">Posts</h1>
             <ListPosts posts={posts} />
           </>
         )}
@@ -65,4 +73,7 @@ const mapDispatchToProps = (
   fetchPosts: () => dispatch(fetchPostsAction()),
   fetchUsers: () => dispatch(fetchUsersAction()),
 });
-export default connect(mapStateToProps, mapDispatchToProps)(UsersPostsContainer);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(UsersPostsContainer);
