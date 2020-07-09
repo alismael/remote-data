@@ -76,7 +76,7 @@ PostsComponent.tsx
 
 ```tsx
 const PostsLoading = () => <>Loading posts...</>;
-const PostsError = ({ err }: { err: string }) => <>{err}</>;
+const PostsError = ({ err }: { err: ErrorResponse }) => <>{err}</>;
 const ListPosts = ({ data }: { data: Post[] }) => <>Here you can use the fetched data</>
 
 type PostsContainerProps = {
