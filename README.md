@@ -93,8 +93,8 @@ const PostsContainer = ({ fetchPosts, posts }: PostsContainerProps) => {
     <RemoteComponent
       remote={{ posts }}
       loading={PostsLoading}
-      reject={({ posts }) => <PostsError error={posts} />}
-      success={({ posts }) => <ListPosts posts={posts} />}
+      reject={({ posts }) => <PostsError error={posts.error} />}
+      success={({ posts }) => <ListPosts posts={posts.data} />}
     />
   );
 };
@@ -158,8 +158,8 @@ import { RemoteComponent } from 'remote-data';
 <RemoteComponent
   remote={{ posts }}
   loading={PostsLoading}
-  reject={({ posts }) => <PostsError error={posts} />}
-  success={({ posts }) => <ListPosts posts={posts} />}
+  reject={({ posts }) => <PostsError error={posts.error} />}
+  success={({ posts }) => <ListPosts posts={posts.data} />}
 />
 ```
 
@@ -254,16 +254,16 @@ type Action<T, E> =
   )}
   reject={({ posts, users }) => (
     <>
-      {users && <UsersError error={users} />}
-      {posts && <PostsError error={posts} />}
+      {users.error && <UsersError error={users.error} />}
+      {posts.error && <PostsError error={posts.error} />}
     </>
   )}
   success={({ posts, users }) => (
     <>
       <h1 className="page-title">Users</h1>
-      <ListUsers users={users} />
+      <ListUsers users={users.data} />
       <h1 className="page-title">Posts</h1>
-      <ListPosts posts={posts} />
+      <ListPosts posts={posts.data} />
     </>
   )}
 />
