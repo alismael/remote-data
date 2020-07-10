@@ -23,8 +23,8 @@ const UsersContainer = ({ fetchUsers, users }: UsersContainerProps) => {
       <RemoteComponent
         remote={{ users }}
         loading={UsersLoading}
-        reject={({ users }) => <UsersError error={users} />}
-        success={({ users }) => <ListUsers users={users} />}
+        reject={({ users }) => <UsersError error={users.error} />}
+        success={({ users }) => <ListUsers users={users.data} />}
       />
     </>
   );

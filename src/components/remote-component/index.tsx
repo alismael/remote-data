@@ -4,23 +4,24 @@ import {
   RemoteDataAggregate,
   SuccessAggregate,
   RejectAggregate,
+  RemoteData,
 } from '../../models';
 import { remoteToReject, remoteToSuccess } from '../../utils';
 
-interface RemoteComponentProps<_T, _E> {
-  remote: RemoteDataAggregate<any, any>;
-  success: (data: SuccessAggregate<any>) => JSX.Element;
+interface RemoteComponentProps<T> {
+  remote: RemoteDataAggregate<T>;
+  success: (data: SuccessAggregate<T>) => JSX.Element;
   loading?: () => JSX.Element;
-  reject?: (reject: RejectAggregate<any>) => JSX.Element;
+  reject?: (reject: RejectAggregate<T>) => JSX.Element;
 }
 
-const RemoteComponent = <T, E>({
+const RemoteComponent = <T,>({
   remote,
   loading,
   reject,
   success,
-}: RemoteComponentProps<T, E>) => {
-  const remoteData = Object.values(remote);
+}: RemoteComponentProps<T>) => {
+  const remoteData: RemoteData<any, any>[] = Object.values(remote);
 
   if (remoteData.some((r) => r.kind === RemoteKind.NotAsked))
     return <React.Fragment></React.Fragment>;

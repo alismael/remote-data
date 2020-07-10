@@ -46,16 +46,16 @@ const UsersPostsContainer = ({
         )}
         reject={({ posts, users }) => (
           <>
-            {users && <UsersError error={users} />}
-            {posts && <PostsError error={posts} />}
+            {users.error && <UsersError error={users.error} />}
+            {posts.error && <PostsError error={posts.error} />}
           </>
         )}
         success={({ posts, users }) => (
           <>
             <h1 className="page-title">Users</h1>
-            <ListUsers users={users} />
+            <ListUsers users={users.data} />
             <h1 className="page-title">Posts</h1>
-            <ListPosts posts={posts} />
+            <ListPosts posts={posts.data} />
           </>
         )}
       />

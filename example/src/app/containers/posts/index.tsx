@@ -23,8 +23,8 @@ const PostsContainer = ({ fetchPosts, posts }: PostsContainerProps) => {
       <RemoteComponent
         remote={{ posts }}
         loading={PostsLoading}
-        reject={({ posts }) => <PostsError error={posts} />}
-        success={({ posts }) => <ListPosts posts={posts} />}
+        reject={({ posts }) => <PostsError error={posts.error} />}
+        success={({ posts }) => <ListPosts posts={posts.data} />}
       />
     </>
   );

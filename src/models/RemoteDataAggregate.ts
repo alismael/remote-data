@@ -1,13 +1,13 @@
-import { RemoteData } from "./RemoteData";
+import { RemoteData, Success, Reject } from './RemoteData';
 
-export type RemoteDataAggregate<T, E> = {
-  [key: string]: RemoteData<T, E>;
+export type RemoteDataAggregate<T> = {
+  [K in keyof T]: RemoteData<any, any>;
 };
 
 export type SuccessAggregate<T> = {
-  [key: string]: T;
+  [K in keyof T]: Success<any>;
 };
 
-export type RejectAggregate<E> = {
-  [key: string]: E;
+export type RejectAggregate<T> = {
+  [K in keyof T]: Reject<any>;
 };
