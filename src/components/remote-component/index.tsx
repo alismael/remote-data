@@ -8,14 +8,14 @@ import {
 } from '../../models';
 import { remoteToReject, remoteToSuccess } from '../../utils';
 
-interface RemoteComponentProps<T> {
-  remote: RemoteDataAggregate<T>;
+interface RemoteComponentProps<T extends RemoteDataAggregate<T>> {
+  remote: T;
   success: (data: SuccessAggregate<T>) => JSX.Element;
   loading?: () => JSX.Element;
   reject?: (reject: RejectAggregate<T>) => JSX.Element;
 }
 
-const RemoteComponent = <T,>({
+const RemoteComponent = <T extends RemoteDataAggregate<T>>({
   remote,
   loading,
   reject,

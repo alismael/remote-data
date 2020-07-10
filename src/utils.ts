@@ -4,11 +4,11 @@ import {
   RejectAggregate,
 } from './models';
 
-const remoteToSuccess = <T>(
+const remoteToSuccess = <T extends RemoteDataAggregate<T>>(
   remote: RemoteDataAggregate<T>,
 ): SuccessAggregate<T> => remote as SuccessAggregate<T>;
 
-const remoteToReject = <T>(
+const remoteToReject = <T extends RemoteDataAggregate<T>>(
   remote: RemoteDataAggregate<T>,
 ): RejectAggregate<T> => remote as RejectAggregate<T>;
 
