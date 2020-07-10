@@ -11,6 +11,7 @@ type UsersContainerProps = {
   fetchUsers: () => Promise<User[]>;
   users: RemoteData<User[], ErrorResponse>;
 };
+
 const UsersContainer = ({ fetchUsers, users }: UsersContainerProps) => {
   React.useEffect(() => {
     fetchUsers();
@@ -22,7 +23,7 @@ const UsersContainer = ({ fetchUsers, users }: UsersContainerProps) => {
       <RemoteComponent
         remote={{ users }}
         loading={UsersLoading}
-        reject={({ error }) => <UsersError error={error} />}
+        reject={({ users }) => <UsersError error={users} />}
         success={({ users }) => <ListUsers users={users} />}
       />
     </>
