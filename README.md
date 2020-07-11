@@ -1,6 +1,6 @@
 # remote-data
 
-> Handling modeling, fetching, and displaying remote data in React/Redux apps
+> Handle modeling, fetching, and displaying remote data in React/Redux apps
 
 ## Idea
 
@@ -8,19 +8,19 @@ A React library aimed at modeling, fetching, and displaying remote data and the 
 
 This library provides:
 
-* an [api](#apit-e) request wrapper based on <a href="https://github.com/axios/axios">Axios</a> to make the API calls
-* a [fetchingReducer](#fetchingreducer) to update the store
-* a [RemoteComponent](#remotecomponent) to handle displaying remote data
+* [api](#apit-e) request wrapper based on <a href="https://github.com/axios/axios">Axios</a> to make the HTTP requests
+* [fetchingReducer](#fetchingreducer) to update the store
+* [RemoteComponent](#remotecomponent) to handle displaying remote data
 
 ## Dependencies
 
 ### Required Peer Dependencies
 
-These libraries are not bundled with remote-data and required at runtime:
+These libraries are not bundled with remote-data but required at runtime:
 
-* [**react**](https://www.npmjs.com/package/react)
-* [**redux**](https://www.npmjs.com/package/redux)
-* [**axios**](https://www.npmjs.com/package/axios)
+* [**React**](https://www.npmjs.com/package/react)
+* [**Redux**](https://www.npmjs.com/package/redux)
+* [**Axios**](https://www.npmjs.com/package/axios)
 
 #### Install
 
@@ -127,12 +127,12 @@ api<Post[], ErrorResponse>({
 });
 ```
 
-Request Config:
+Request Config
 
 In addition to axios <a href="https://github.com/axios/axios#request-config">request config</a> there are **three more options**:
 
-* `action`: is the action type that will be dispatched when request state changed. if not provided no action will be dispatched
-* `onSuccess`, `onError`: are the callbacks to be triggered for the relevant request state
+* `action`: is the action type that will be dispatched when request state changed. If not provided no action will be dispatched.
+* `onSuccess`, `onError`: are the callbacks to be triggered for the relevant request state.
 
 ## fetchingReducer
 
@@ -150,7 +150,7 @@ combineReducers({
 
 ## RemoteComponent
 
-Handling the display of your remote data.
+Handle displaying of your remote data.
 
 ```tsx
 import { RemoteComponent } from 'remote-data';
@@ -269,9 +269,9 @@ type Action<T, E> =
 />
 ```
 
-## Creating a custom reducer to manually update the store
+## Create a custom reducer to manually update the store
 
-You can create your custom reducer , here's an example to do so:
+You can create your custom reducer, here's an example:
 
 ```ts
 import { RemoteData, RemoteKind, Action } from 'remote-data';
@@ -337,7 +337,7 @@ export default (
 
 ## Development
 
-To setup and run a local copy
+To setup and run locally
 
 1. Clone this repo with `git clone https://github.com/alismael/remote-data`
 2. Run `npm install` in the root folder
