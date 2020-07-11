@@ -25,7 +25,7 @@ These libraries are not bundled with remote-data but required at runtime:
 #### Install
 
 ```sh
-npm install github:alismael/remote-data
+npm i @alismael/remote-data
 ```
 
 #### Usage
