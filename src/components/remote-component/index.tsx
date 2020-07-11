@@ -31,7 +31,7 @@ const RemoteComponent = <T extends RemoteDataAggregate<T>>({
     return <React.Fragment></React.Fragment>;
   }
 
-  if (remoteData.find((r) => r.kind === RemoteKind.Reject)) {
+  if (remoteData.some((r) => r.kind === RemoteKind.Reject)) {
     if (reject) return reject(remoteToReject(remote));
     return <React.Fragment></React.Fragment>;
   }
