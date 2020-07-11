@@ -66,18 +66,18 @@
     "dist"
   ],
   "keywords": [
-    "remote-data",
-    "remote-component",
     "react",
     "redux",
+    "remote-data",
+    "remote-component",
     "component",
     "components",
-    "react-remote-component",
-    "react-remote-data",
     "api",
     "asynchronous",
-    "async",
-    "fetching"
+    "fetching",
+    "fetching-data",
+    "typescript",
+    "typescript-library"
   ],
   "dependencies": {}
 }
