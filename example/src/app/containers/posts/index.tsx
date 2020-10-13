@@ -6,9 +6,10 @@ import { StoreState, Post, ErrorResponse } from '../../models';
 import { RemoteData, RemoteComponent } from 'remote-data';
 import { fetchPosts as fetchPostsAction } from '../../redux/posts/actions';
 import { PostsError, PostsLoading, ListPosts } from '../../components';
+import { AxiosPromise } from 'axios';
 
 type PostsContainerProps = {
-  fetchPosts: () => Promise<Post[]>;
+  fetchPosts: () => AxiosPromise<Post[]>;
   posts: RemoteData<Post[], ErrorResponse>;
 };
 

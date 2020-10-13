@@ -6,9 +6,10 @@ import { StoreState, User, ErrorResponse } from '../../models';
 import { RemoteData, RemoteComponent } from 'remote-data';
 import { fetchUsers as fetchUsersAction } from '../../redux/users/actions';
 import { UsersLoading, UsersError, ListUsers } from '../../components';
+import { AxiosPromise } from 'axios';
 
 type UsersContainerProps = {
-  fetchUsers: () => Promise<User[]>;
+  fetchUsers: () => AxiosPromise<User[]>;
   users: RemoteData<User[], ErrorResponse>;
 };
 

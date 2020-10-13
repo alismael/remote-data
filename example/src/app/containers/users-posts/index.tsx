@@ -14,10 +14,11 @@ import {
   ListUsers,
   UsersLoading,
 } from '../../components';
+import { AxiosPromise } from 'axios';
 
 type UsersPostsContainerProps = {
-  fetchPosts: () => Promise<Post[]>;
-  fetchUsers: () => Promise<User[]>;
+  fetchPosts: () => AxiosPromise<Post[]>;
+  fetchUsers: () => AxiosPromise<User[]>;
   posts: RemoteData<Post[], ErrorResponse>;
   users: RemoteData<User[], ErrorResponse>;
 };
