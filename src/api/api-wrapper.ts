@@ -1,4 +1,9 @@
-import axios, { AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios';
+import axios, {
+  AxiosRequestConfig,
+  AxiosResponse,
+  AxiosError,
+  AxiosPromise,
+} from 'axios';
 import { Dispatch } from 'redux';
 import { Action, RemoteKind } from '../models';
 
@@ -12,7 +17,7 @@ interface Options<T, E> extends AxiosRequestConfig {
 
 const api = <T, E>(
   options: Options<T, E>,
-): ((dispatch: Dispatch<Action<T, E>>) => Promise<T>) => {
+): ((dispatch: Dispatch<Action<T, E>>) => AxiosPromise<T>) => {
   const { action, onSuccess, onError, ...axiosConfig } = options;
 
   return (dispatch: Dispatch<Action<T, E>>) => {
@@ -47,7 +52,9 @@ const api = <T, E>(
     };
 
     onLoading();
-    return axios(axiosConfig).then(onFulfilled).catch(onRejected);
+    const request = axios(axiosConfig);
+    request.then(onFulfilled).catch(onRejected);
+    return request;
   };
 };
 
