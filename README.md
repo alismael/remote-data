@@ -1,5 +1,7 @@
 # remote-data
 
+[![npm version](https://img.shields.io/npm/v/@alismael/remote-data.svg?style=flat-square)](https://www.npmjs.org/package/@alismael/remote-data)
+
 > Handle modeling, fetching, and displaying remote data in React/Redux apps
 
 ## Idea
